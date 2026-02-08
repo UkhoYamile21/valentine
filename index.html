@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Be My Valentine? 💘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 2;
+        }
+
+        h1 {
+            color: #ff3366;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #yes {
+            background-color: #ff3366;
+            color: white;
+        }
+
+        #no {
+            background-color: #ccc;
+            position: absolute;
+            transition: transform 0.2s;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="card">
+        <h1>Hey Lamla 💕</h1>
+        <p>Will you be my Valentine? 💘</p>
+        <button id="yes">Yes 💖</button>
+        <button id="no">No 😢</button>
+    </div>
+
+    <audio id="music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const noBtn = document.getElementById("no");
+        const yesBtn = document.getElementById("yes");
+        const card = document.getElementById("card");
+        const music = document.getElementById("music");
+
+        let noScale = 1;
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            noScale -= 0.08;
+            if (noScale < 0.4) noScale = 0.4;
+
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+            noBtn.style.transform = `scale(${noScale})`;
+        }
+
+        // Desktop + mobile protection
+        noBtn.addEventListener("mouseover", moveNoButton);
+        noBtn.addEventListener("touchstart", moveNoButton);
+
+        yesBtn.addEventListener("click", () => {
+            music.play();
+
+            document.body.innerHTML = `
+            <div style="
+              height:100vh;
+              display:flex;
+              justify-content:center;
+              align-items:center;
+              text-align:center;
+              color:white;
+              font-size:28px;
+              padding:20px;
+              background:linear-gradient(135deg,#ff3366,#ff85a2);">
+              💖 YAYYYY 💖<br><br>
+              Best Valentine ever 😍<br><br>
+              Dinner’s on me Saturday 🍽️✨<br>
+              Thanks 💕
+            </div>`;
+        });
+
+        // Hearts generator
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = Math.random() > 0.5 ? "💖" : "💕";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (20 + Math.random() * 20) + "px";
+            heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 7000);
+        }, 300);
+    </script>
+
+</body>
+</html>
