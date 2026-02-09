@@ -121,8 +121,14 @@
     noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("touchstart", moveNoButton);
 
-    yesBtn.addEventListener("click", () => {
-      music.play();
+    yesBtn.addEventListener("click", async () => {
+  try {
+    await music.play();
+  } catch (e) {
+    // If browser blocks it, show a message
+    alert("Tap the screen to start the music!");
+  }
+
 
       document.body.innerHTML = `
         <div style="
@@ -159,5 +165,6 @@
 </body>
 
 </html>
+
 
 
