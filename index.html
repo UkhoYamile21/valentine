@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Be My Valentine? ❤️🤍</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff0000, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 2;
+        }
+
+        h1 {
+            color: #ff0000;
+        }
+
+        p {
+            font-size: 18px;
+            color: #ff0000;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #yes {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        #no {
+            background-color: #ffffff;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            position: absolute;
+            transition: transform 0.2s;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+            opacity: 0.7;
+            color: #ff0000;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="card">
+        <h1>Hey Lamla... 😊</h1>
+        <p>I’ve been wanting to ask you something for a while.</p>
+        <p>Would you be my Valentine?</p>
+        <button id="yes">Yes 💖</button>
+        <button id="no">No 😅</button>
+    </div>
+
+    <audio id="music" loop>
+        <source src="Ami-Faku-Ungowami.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const card = document.getElementById("card");
+    const music = document.getElementById("music");
+
+    let noScale = 1;
+
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+      noScale -= 0.08;
+      if (noScale < 0.4) noScale = 0.4;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+      noBtn.style.transform = `scale(${noScale})`;
+    }
+
+    // Desktop + mobile protection
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+        yesBtn.addEventListener("click", async () => {
+            try {
+                await music.play();
+            } catch (e) {
+                // If browser blocks it, show a message
+                alert("Tap the screen to start the music!");
+            }
+
+
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          text-align:center;
+          color:white;
+          font-size:28px;
+          padding:20px;
+          background:linear-gradient(135deg,#ff0000,#ffffff);">
+          ❤️ YAYYYY ❤️<br><br>
+          Best Valentine ever 😍<br><br>
+          Dinner’s on me on Saturday 🍽️✨<br>
+          See you soon ❤️
+        </div>`;
+    });
+
+    // Hearts generator
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+    </script>
+
+</body>
+</html>
